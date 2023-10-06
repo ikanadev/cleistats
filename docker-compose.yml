@@ -33,10 +33,17 @@ services:
       - plausible_db
       - plausible_events_db
       - mail
-    ports:
-      - 8000:8000
     env_file:
       - plausible-conf.env
+
+  plausible_nginx:
+    build: ./nginx
+    ports:
+      - 8000:8000
+    volumes:
+      - ./nginx/certs/:/etc/nginx/ssl/
+    depends_on:
+      - plausible
 
 volumes:
   db-data:
